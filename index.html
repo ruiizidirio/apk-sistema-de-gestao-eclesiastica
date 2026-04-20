@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="theme-color" content="#0f1a2b">
+<title>Igreja Viva | Gestão Eclesiástica Profissional</title>
+
+<!-- Google Fonts + Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    transition: all 0.3s ease;
+  }
+
+  /* Tema Claro */
+  body.tema-claro {
+    background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+    color: #1a2a3a;
+  }
+
+  body.tema-claro .animated-bg {
+    background: transparent;
+  }
+
+  body.tema-claro .gradient-orb,
+  body.tema-claro .gradient-orb2 {
+    opacity: 0.15;
+  }
+
+  body.tema-claro .card,
+  body.tema-claro .church-header,
+  body.tema-claro .footer {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.5);
+    color: #1a2a3a;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  }
+
+  body.tema-claro .card-header i {
+    color: #d4a017;
+  }
+
+  body.tema-claro .list-item {
+    background: rgba(0,0,0,0.04);
+  }
+
+  body.tema-claro .total-row,
+  body.tema-claro .badge-count {
+    background: rgba(0,0,0,0.06);
+  }
+
+  body.tema-claro .search-input {
+    background: rgba(255,255,255,0.9);
+    color: #1a2a3a;
+  }
+
+  body.tema-claro .donate-btn-header,
+  body.tema-claro .donate-btn-footer {
+    background: linear-gradient(105deg, #f39c12, #e67e22);
+    color: white;
+  }
+
+  /* Tema Escuro */
+  body.tema-escuro {
+    background: #0a0f1a;
+    color: #eef2ff;
+  }
+
+  body.tema-escuro .animated-bg {
+    background: radial-gradient(ellipse at 30% 40%, #0f1a2b, #060b14);
+  }
+
+  body.tema-escuro .gradient-orb,
+  body.tema-escuro .gradient-orb2 {
+    opacity: 1;
+  }
+
+  body.tema-escuro .card,
+  body.tema-escuro .church-header,
+  body.tema-escuro .footer {
+    background: rgba(12,22,35,0.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(255,215,100,0.3);
+    color: #eef2ff;
+  }
+
+  body.tema-escuro .card-header i {
+    color: #F5C542;
+  }
+
+  body.tema-escuro .list-item {
+    background: rgba(0,0,0,0.35);
+  }
+
+  body.tema-escuro .total-row,
+  body.tema-escuro .badge-count {
+    background: rgba(0,0,0,0.4);
+  }
+
+  body.tema-escuro .donate-btn-header,
+  body.tema-escuro .donate-btn-footer {
+    background: linear-gradient(105deg, #f39c12, #e67e22);
+    color: white;
+  }
+
+  /* Fundo animado */
+  .animated-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2;
+    transition: all 0.3s ease;
+  }
+
+  .gradient-orb {
+    position: fixed;
+    width: 80vw;
+    height: 80vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0, 180, 200, 0.2), transparent 70%);
+    top: -30vh;
+    right: -20vw;
+    z-index: -1;
+    animation: floatOrb 22s infinite alternate;
+  }
+
+  .gradient-orb2 {
+    position: fixed;
+    width: 70vw;
+    height: 70vw;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 180, 80, 0.12), transparent 70%);
+    bottom: -30vh;
+    left: -20vw;
+    z-index: -1;
+    animation: floatOrb2 25s infinite alternate;
+  }
+
+  @keyframes floatOrb {
+    0% { transform: translate(0,0) scale(1); opacity:0.4; }
+    100% { transform: translate(-5%,5%) scale(1.1); opacity:0.7; }
+  }
+  @keyframes floatOrb2 {
+    0% { transform: translate(0,0) scale(1); opacity:0.3; }
+    100% { transform: translate(5%,-5%) scale(1.2); opacity:0.6; }
+  }
+
+  .particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .particle {
+    position: absolute;
+    background: rgba(200,220,255,0.2);
+    border-radius: 50%;
+    animation: floatParticle 12s infinite linear;
+  }
+
+  @keyframes floatParticle {
+    0% { transform: translateY(100vh) translateX(0) rotate(0deg); opacity:0; }
+    15% { opacity:0.5; }
+    85% { opacity:0.5; }
+    100% { transform: translateY(-20vh) translateX(30px) rotate(360deg); opacity:0; }
+  }
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Cabeçalho */
+  .church-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    backdrop-filter: blur(16px);
+    border-radius: 2rem;
+    padding: 1.2rem;
+    box-shadow: 0 12px 32px -12px rgba(0,0,0,0.4);
+  }
+
+  .church-name-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  #churchNameDisplay {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(125deg, #FFF2CC, #FFE0A3, #F5C542);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    cursor: pointer;
+  }
+
+  .edit-church-btn, .backup-btn, .theme-btn, .donate-btn-header {
+    background: rgba(255,200,80,0.15);
+    border: 1px solid rgba(255,200,80,0.5);
+    padding: 0.5rem 0.9rem;
+    border-radius: 2rem;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  
+  .donate-btn-header, .donate-btn-footer {
+    background: linear-gradient(105deg, #f39c12, #e67e22);
+    border: none;
+    color: white;
+    font-weight: 600;
+  }
+  
+  .donate-btn-header i, .donate-btn-footer i {
+    color: white;
+  }
+  
+  .donate-btn-header:hover, .donate-btn-footer:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+  
+  .edit-church-btn:hover, .backup-btn:hover, .theme-btn:hover {
+    background: rgba(255,200,80,0.3);
+    transform: translateY(-2px);
+  }
+
+  .church-input-area {
+    margin-top: 1rem;
+    display: none;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .church-input-area input {
+    padding: 0.7rem 1.2rem;
+    border-radius: 2.5rem;
+    border: none;
+    width: 260px;
+    background: rgba(255,255,245,0.95);
+  }
+
+  .backup-bar {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  /* Cards */
+  .cards-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .card {
+    backdrop-filter: blur(14px);
+    border-radius: 1.5rem;
+    padding: 1.2rem;
+    transition: transform 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #F5C542;
+    padding-bottom: 0.8rem;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .card-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .card-header-left i {
+    font-size: 1.3rem;
+  }
+
+  .inline-form {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .inline-form input, .inline-form select {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.7rem 1rem;
+    border-radius: 2rem;
+    border: none;
+    background: rgba(255,255,245,0.92);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+  }
+
+  button {
+    background: linear-gradient(105deg, #00a67e, #0088b3);
+    border: none;
+    padding: 0.65rem 1.2rem;
+    border-radius: 2.5rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: white;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+  }
+  button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.05);
+  }
+
+  .btn-small {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.7rem;
+  }
+  .btn-danger { background: #e74c3c; }
+  .btn-edit { background: #f39c12; }
+  .btn-presente { background: #27ae60; }
+  .btn-falta { background: #e67e22; }
+
+  .search-bar {
+    margin-bottom: 1rem;
+  }
+  .search-input {
+    width: 100%;
+    padding: 0.7rem 1rem;
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    outline: none;
+    border: none;
+  }
+
+  .list-container {
+    max-height: 280px;
+    overflow-y: auto;
+  }
+  .list-container::-webkit-scrollbar {
+    width: 5px;
+  }
+  .list-container::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+  }
+  .list-container::-webkit-scrollbar-thumb {
+    background: #F5C542;
+    border-radius: 10px;
+  }
+
+  .list-item {
+    margin: 0.5rem 0;
+    padding: 0.7rem 1rem;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .list-item-info {
+    flex: 1;
+    font-size: 0.85rem;
+  }
+  .list-item-info small {
+    font-size: 0.7rem;
+    opacity: 0.7;
+  }
+  .list-item-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .total-row, .badge-count {
+    margin-top: 0.8rem;
+    padding: 0.4rem 1rem;
+    border-radius: 2rem;
+    display: inline-block;
+    font-size: 0.85rem;
+  }
+
+  .estatistica-escola {
+    display: flex;
+    gap: 1rem;
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+  }
+
+  /* Aniversariantes */
+  .birthday-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .birthday-tag {
+    background: rgba(245,197,66,0.2);
+    border-radius: 2rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .birthday-tag i {
+    color: #f39c12;
+  }
+  .leader-badge {
+    background: #27ae60;
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.65rem;
+    margin-left: 0.5rem;
+  }
+  .member-badge {
+    background: #3498db;
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.65rem;
+    margin-left: 0.5rem;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    text-align: center;
+    backdrop-filter: blur(16px);
+    border-radius: 1.5rem;
+  }
+  
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .donate-btn-footer {
+    padding: 0.7rem 1.8rem;
+    font-size: 0.9rem;
+    border-radius: 3rem;
+    box-shadow: 0 4px 12px rgba(243, 156, 18, 0.3);
+  }
+  
+  .footer-text {
+    font-size: 0.75rem;
+    opacity: 0.7;
+  }
+  
+  .heart-icon {
+    color: #ff6b6b;
+    animation: heartbeat 1.5s ease infinite;
+  }
+  
+  @keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    #churchNameDisplay { font-size: 1.3rem; }
+    .inline-form { flex-direction: column; }
+    .inline-form button { width: 100%; justify-content: center; }
+    .church-name-wrapper { gap: 0.5rem; }
+    .donate-btn-header { padding: 0.4rem 0.7rem; font-size: 0.7rem; }
+  }
+
+  .toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #1e2a3a;
+    backdrop-filter: blur(12px);
+    padding: 12px 20px;
+    border-radius: 40px;
+    color: #F5C542;
+    z-index: 1001;
+    animation: fadeOut 2.5s forwards;
+  }
+  @keyframes fadeOut {
+    0% { opacity: 0; transform: translateX(50px); }
+    15% { opacity: 1; transform: translateX(0); }
+    85% { opacity: 1; }
+    100% { opacity: 0; visibility: hidden; }
+  }
+
+  .modal-edit {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    backdrop-filter: blur(8px);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-edit-content {
+    background: rgba(10,20,35,0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 2rem;
+    width: 90%;
+    max-width: 500px;
+    padding: 1.5rem;
+    border: 1px solid #F5C542;
+  }
+  .modal-edit-content h3 {
+    color: #F5C542;
+    margin-bottom: 1rem;
+  }
+  .modal-edit-content input, .modal-edit-content select {
+    width: 100%;
+    padding: 0.7rem;
+    border-radius: 1rem;
+    border: none;
+    margin: 0.5rem 0;
+    background: rgba(255,255,245,0.9);
+  }
+  .modal-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    justify-content: flex-end;
+  }
+</style>
+</head>
+<body class="tema-escuro">
+
+<div class="animated-bg"></div>
+<div class="gradient-orb"></div>
+<div class="gradient-orb2"></div>
+<div class="particles" id="particlesContainer"></div>
+
+<div class="container">
+  <div class="church-header">
+    <div class="church-name-wrapper">
+      <span id="churchNameDisplay">✝️ IGREJA VIVA ✝️</span>
+      <button class="edit-church-btn" onclick="editarNomeIgreja()"><i class="fas fa-pen"></i> Editar</button>
+      <button class="theme-btn" onclick="alternarTema()"><i class="fas fa-moon"></i> Dia/Noite</button>
+      <button class="donate-btn-header" onclick="window.open('https://mpago.la/1Knf73g', '_blank')">
+        <i class="fas fa-heart"></i> Apoiar
+      </button>
+    </div>
+    <div id="churchInputArea" class="church-input-area">
+      <input type="text" id="churchNameInput" placeholder="Digite o nome da igreja">
+      <button onclick="salvarNomeIgreja()"><i class="fas fa-check"></i> Salvar</button>
+      <button onclick="cancelarEdicao()">Cancelar</button>
+    </div>
+    <div class="backup-bar">
+      <button class="backup-btn" onclick="exportarBackup()"><i class="fas fa-download"></i> Backup</button>
+      <button class="backup-btn" onclick="importarBackup()"><i class="fas fa-upload"></i> Restaurar</button>
+    </div>
+  </div>
+
+  <div class="cards-column">
+    <!-- 1. LÍDERES -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-chalkboard-user"></i> Líderes e Ministérios</div>
+        <button class="btn-small" onclick="abrirModalLider()" style="background:#f39c12;"><i class="fas fa-plus"></i> Novo Líder</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchLideres" placeholder="🔍 Buscar líder...">
+      </div>
+      <div class="list-container" id="lideresList"></div>
+      <div class="badge-count" id="contLideres">👑 0 líderes</div>
+    </div>
+
+    <!-- 2. MEMBROS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-users"></i> Membros</div>
+      </div>
+      <div class="inline-form">
+        <input type="text" id="membroNome" placeholder="Nome completo">
+        <input type="date" id="membroNascimento">
+        <button onclick="adicionarMembro()"><i class="fas fa-user-plus"></i> Adicionar</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchMembros" placeholder="🔍 Buscar membro...">
+      </div>
+      <div class="list-container" id="listaMembros"></div>
+      <div class="badge-count" id="contMembros">👥 0 membros</div>
+    </div>
+
+    <!-- 3. DÍZIMOS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-hand-holding-usd"></i> Dízimos</div>
+      </div>
+      <div class="inline-form">
+        <input type="text" id="dizimistaNome" placeholder="Nome">
+        <input type="number" id="dizimoValor" placeholder="Valor (R$)" step="0.01">
+        <input type="date" id="dizimoData" value="">
+        <button onclick="adicionarDizimo()"><i class="fas fa-plus"></i> Adicionar</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchDizimos" placeholder="🔍 Buscar dízimo...">
+      </div>
+      <div class="list-container" id="listaDizimos"></div>
+      <div class="total-row" id="totalDizimos">💰 Total: R$ 0,00</div>
+    </div>
+
+    <!-- 4. OFERTAS -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-gift"></i> Ofertas</div>
+      </div>
+      <div class="inline-form">
+        <input type="text" id="ofertanteNome" placeholder="Nome">
+        <input type="number" id="ofertaValor" placeholder="Valor (R$)" step="0.01">
+        <input type="date" id="ofertaData" value="">
+        <button onclick="adicionarOferta()"><i class="fas fa-plus"></i> Adicionar</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchOfertas" placeholder="🔍 Buscar oferta...">
+      </div>
+      <div class="list-container" id="listaOfertas"></div>
+      <div class="total-row" id="totalOfertas">💰 Total: R$ 0,00</div>
+    </div>
+
+    <!-- 5. ESCOLA DOMINICAL -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-chalkboard-user"></i> Escola Dominical</div>
+      </div>
+      <div class="inline-form">
+        <input type="text" id="edNome" placeholder="Nome">
+        <input type="date" id="edData">
+        <button onclick="registrarPresenca()" class="btn-presente"><i class="fas fa-check-circle"></i> Presente</button>
+        <button onclick="registrarFalta()" class="btn-falta"><i class="fas fa-times-circle"></i> Falta</button>
+      </div>
+      <div class="estatistica-escola">
+        <span>✅ Presentes: <strong id="totalEDPresentes">0</strong></span>
+        <span>❌ Ausentes: <strong id="totalEDAusentes">0</strong></span>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchEscola" placeholder="🔍 Buscar registro...">
+      </div>
+      <div class="list-container" id="listaEscolaDominical"></div>
+    </div>
+
+    <!-- 6. ANIVERSARIANTES DO MÊS (LÍDERES + MEMBROS) -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-birthday-cake"></i> Aniversariantes do Mês</div>
+        <span class="badge-count" id="totalAniversariantes">🎂 0 aniversariantes</span>
+      </div>
+      <div id="aniversariantesList" class="birthday-list">Carregando...</div>
+    </div>
+
+    <!-- 7. AGENDA -->
+    <div class="card">
+      <div class="card-header">
+        <div class="card-header-left"><i class="fas fa-calendar-alt"></i> Agenda</div>
+      </div>
+      <div class="inline-form">
+        <input type="text" id="eventoTitulo" placeholder="Título">
+        <input type="date" id="eventoData">
+        <input type="time" id="eventoHora">
+        <button onclick="adicionarEvento()"><i class="fas fa-plus"></i> Adicionar</button>
+      </div>
+      <div class="search-bar">
+        <input type="text" class="search-input" id="searchEventos" placeholder="🔍 Buscar evento...">
+      </div>
+      <div class="list-container" id="listaEventos"></div>
+    </div>
+  </div>
+
+  <!-- RODAPÉ -->
+  <div class="footer">
+    <div class="footer-content">
+      <button class="donate-btn-footer" onclick="window.open('https://mpago.la/1Knf73g', '_blank')">
+        <i class="fas fa-heart heart-icon"></i> Apoie este Projeto <i class="fas fa-hand-holding-heart"></i>
+      </button>
+      <div class="footer-text">
+        <i class="fas fa-church"></i> Sistema de Gestão Eclesiástica | Desenvolvido com dedicação
+      </div>
+      <div class="footer-text">
+        🙏 "Cada um contribua como propôs no seu coração" - 2 Coríntios 9:7
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Editar Genérico -->
+<div id="modalEditar" class="modal-edit">
+  <div class="modal-edit-content">
+    <h3 id="modalEditarTitle"><i class="fas fa-edit"></i> Editar</h3>
+    <div id="modalEditarCampos"></div>
+    <div class="modal-buttons">
+      <button onclick="fecharModalEditar()" class="btn-small" style="background:#6c757d;">Cancelar</button>
+      <button onclick="salvarEdicao()" class="btn-small" style="background:#27ae60;">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Líder -->
+<div id="modalLider" class="modal-edit">
+  <div class="modal-edit-content">
+    <h3 id="modalLiderTitle"><i class="fas fa-user-plus"></i> Adicionar Líder</h3>
+    <input type="text" id="liderNome" placeholder="Nome completo *">
+    <select id="liderCargo">
+      <optgroup label="🕊️ MINISTÉRIO PASTORAL">
+        <option value="Pastor Presidente">👨‍🏫 Pastor Presidente</option>
+        <option value="Pastor">👨‍🏫 Pastor</option>
+        <option value="Pastora">👩‍🏫 Pastora</option>
+        <option value="Presbítero">🕊️ Presbítero</option>
+        <option value="Evangelista">📢 Evangelista</option>
+        <option value="Missionário">🌍 Missionário</option>
+      </optgroup>
+      <optgroup label="📖 EDUCAÇÃO CRISTÃ">
+        <option value="Superintendente EBD">📚 Superintendente EBD</option>
+        <option value="Professor(a) EBD">📖 Professor(a) EBD</option>
+      </optgroup>
+      <optgroup label="🎵 MÚSICA E LOUVOR">
+        <option value="Líder de Louvor">🎵 Líder de Louvor</option>
+        <option value="Músico">🎹 Músico</option>
+      </optgroup>
+      <optgroup label="🤝 DIACONATO">
+        <option value="Diácono">🤝 Diácono</option>
+        <option value="Diaconisa">🤝 Diaconisa</option>
+      </optgroup>
+      <optgroup label="🏠 PEQUENOS GRUPOS">
+        <option value="Coordenador de Células">🏘️ Coordenador de Células</option>
+        <option value="Líder de Célula">🏠 Líder de Célula</option>
+      </optgroup>
+      <optgroup label="📋 ADMINISTRAÇÃO">
+        <option value="Tesoureiro">💰 Tesoureiro</option>
+        <option value="Secretário(a)">📝 Secretário(a)</option>
+      </optgroup>
+      <optgroup label="🛠️ SERVIÇOS">
+        <option value="Auxiliar">🛠️ Auxiliar</option>
+        <option value="Porteiro">🚪 Porteiro</option>
+      </optgroup>
+      <optgroup label="👥 DEPARTAMENTOS">
+        <option value="Líder de Jovens">🔥 Líder de Jovens</option>
+        <option value="Líder de Seniores">👴 Líder de Seniores</option>
+        <option value="Líder de Mulheres">💐 Líder de Mulheres</option>
+        <option value="Líder de Homens">💪 Líder de Homens</option>
+      </optgroup>
+    </select>
+    <input type="date" id="liderNascimento" placeholder="Data de nascimento">
+    <input type="tel" id="liderTelefone" placeholder="Telefone (opcional)">
+    <input type="email" id="liderEmail" placeholder="E-mail (opcional)">
+    <div class="modal-buttons">
+      <button onclick="fecharModalLider()" class="btn-small" style="background:#6c757d;">Cancelar</button>
+      <button onclick="salvarLider()" class="btn-small" style="background:#27ae60;">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Dados
+  let dados = {
+    igreja: "✝️ IGREJA VIVA ✝️",
+    lideres: [],
+    membros: [],
+    dizimos: [],
+    ofertas: [],
+    escolaDominical: [],
+    eventos: []
+  };
+
+  let currentEditType = null;
+  let currentEditId = null;
+  let currentLiderEditId = null;
+
+  // Salvar/Ler localStorage
+  function salvarDados() {
+    localStorage.setItem("igrejaVivaData", JSON.stringify(dados));
+  }
+
+  function carregarDados() {
+    const saved = localStorage.getItem("igrejaVivaData");
+    if (saved) {
+      dados = JSON.parse(saved);
+    } else {
+      // Dados iniciais com datas de nascimento para teste de aniversariantes
+      const hoje = new Date();
+      const mesAtual = hoje.getMonth() + 1;
+      const diaAtual = hoje.getDate();
+      
+      dados = {
+        igreja: "✝️ IGREJA VIVA ✝️",
+        lideres: [
+          { id: Date.now()+1, nome: "Pr. José Almeida", cargo: "Pastor Presidente", nascimento: `1975-${String(mesAtual).padStart(2,'0')}-${String(diaAtual).padStart(2,'0')}`, telefone: "(11) 98765-4321", email: "pastor@igrejaviva.com" }
+        ],
+        membros: [
+          { id: Date.now()+2, nome: "Maria Silva", nascimento: `1990-${String(mesAtual).padStart(2,'0')}-15` },
+          { id: Date.now()+3, nome: "João Santos", nascimento: `1985-${String(mesAtual).padStart(2,'0')}-20` }
+        ],
+        dizimos: [
+          { id: Date.now()+4, nome: "João Santos", valor: 150.00, data: "2025-03-01" }
+        ],
+        ofertas: [
+          { id: Date.now()+5, nome: "Ana Costa", valor: 80.00, data: "2025-03-02" }
+        ],
+        escolaDominical: [
+          { id: Date.now()+6, nome: "Carlos Souza", data: "2025-03-10", presente: true }
+        ],
+        eventos: [
+          { id: Date.now()+7, titulo: "Culto de Oração", data: "2025-03-15", hora: "19:00" }
+        ]
+      };
+      salvarDados();
+    }
+    document.getElementById("churchNameDisplay").innerText = dados.igreja;
+  }
+
+  // Nome da igreja
+  function editarNomeIgreja() {
+    document.getElementById("churchInputArea").style.display = "flex";
+    document.getElementById("churchNameInput").value = dados.igreja;
+  }
+  function salvarNomeIgreja() {
+    const novoNome = document.getElementById("churchNameInput").value.trim();
+    if (novoNome) dados.igreja = novoNome;
+    document.getElementById("churchNameDisplay").innerText = dados.igreja;
+    document.getElementById("churchInputArea").style.display = "none";
+    salvarDados();
+    mostrarToast("Nome da igreja atualizado!");
+  }
+  function cancelarEdicao() {
+    document.getElementById("churchInputArea").style.display = "none";
+  }
+
+  // Tema
+  function alternarTema() {
+    document.body.classList.toggle("tema-claro");
+    document.body.classList.toggle("tema-escuro");
+  }
+
+  // Toast
+  function mostrarToast(msg) {
+    const toast = document.createElement("div");
+    toast.className = "toast";
+    toast.innerHTML = `<i class="fas fa-check-circle"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }
+
+  // Backup
+  function exportarBackup() {
+    const dataStr = JSON.stringify(dados, null, 2);
+    const blob = new Blob([dataStr], {type: "application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `igreja_backup_${new Date().toISOString().slice(0,10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    mostrarToast("Backup exportado!");
+  }
+  function importarBackup() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.onchange = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        try {
+          const imported = JSON.parse(ev.target.result);
+          dados = imported;
+          salvarDados();
+          renderizarTudo();
+          mostrarToast("Backup restaurado!");
+        } catch(e) { alert("Arquivo inválido"); }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
+  }
+
+  // ========== FUNÇÃO DE ANIVERSARIANTES (LÍDERES + MEMBROS) ==========
+  function atualizarAniversariantes() {
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth() + 1;
+    const diaAtual = hoje.getDate();
+    
+    // Coleta aniversariantes de líderes e membros
+    const aniversariantes = [];
+    
+    // Adiciona líderes com data de nascimento
+    dados.lideres.forEach(lider => {
+      if (lider.nascimento) {
+        const partes = lider.nascimento.split('-');
+        if (partes.length === 3) {
+          const mes = parseInt(partes[1]);
+          const dia = parseInt(partes[2]);
+          if (mes === mesAtual) {
+            aniversariantes.push({
+              nome: lider.nome,
+              tipo: "líder",
+              cargo: lider.cargo,
+              dia: dia,
+              dataCompleta: lider.nascimento
+            });
+          }
+        }
+      }
+    });
+    
+    // Adiciona membros com data de nascimento
+    dados.membros.forEach(membro => {
+      if (membro.nascimento) {
+        const partes = membro.nascimento.split('-');
+        if (partes.length === 3) {
+          const mes = parseInt(partes[1]);
+          const dia = parseInt(partes[2]);
+          if (mes === mesAtual) {
+            aniversariantes.push({
+              nome: membro.nome,
+              tipo: "membro",
+              cargo: null,
+              dia: dia,
+              dataCompleta: membro.nascimento
+            });
+          }
+        }
+      }
+    });
+    
+    // Ordena por dia do mês
+    aniversariantes.sort((a, b) => a.dia - b.dia);
+    
+    // Renderiza
+    const container = document.getElementById("aniversariantesList");
+    const totalSpan = document.getElementById("totalAniversariantes");
+    
+    if (aniversariantes.length === 0) {
+      container.innerHTML = '<div style="text-align:center;padding:1rem;opacity:0.7;"><i class="fas fa-birthday-cake"></i> Nenhum aniversariante neste mês</div>';
+      totalSpan.innerHTML = "🎂 0 aniversariantes";
+      return;
+    }
+    
+    totalSpan.innerHTML = `🎂 ${aniversariantes.length} aniversariante${aniversariantes.length !== 1 ? 's' : ''}`;
+    
+    container.innerHTML = aniversariantes.map(p => {
+      const hojeEDia = p.dia === diaAtual;
+      return `
+        <div class="birthday-tag" style="${hojeEDia ? 'background: rgba(245,197,66,0.4); border: 1px solid #F5C542;' : ''}">
+          <i class="fas fa-birthday-cake"></i>
+          <strong>${p.nome}</strong>
+          <span class="${p.tipo === 'líder' ? 'leader-badge' : 'member-badge'}">
+            ${p.tipo === 'líder' ? `👑 ${p.cargo}` : '🙏 Membro'}
+          </span>
+          ${hojeEDia ? '<span style="color:#F5C542;">🎉 HOJE!</span>' : `<small>Dia ${p.dia}</small>`}
+        </div>
+      `;
+    }).join("");
+  }
+
+  // ========== FUNÇÕES DE EDIÇÃO ==========
+  function abrirModalEditar(tipo, id) {
+    currentEditType = tipo;
+    currentEditId = id;
+    
+    let item = null;
+    let html = "";
+    
+    if (tipo === "membro") {
+      item = dados.membros.find(m => m.id === id);
+      html = `
+        <label>Nome:</label>
+        <input type="text" id="editNome" value="${item.nome}">
+        <label>Data de Nascimento:</label>
+        <input type="date" id="editNascimento" value="${item.nascimento || ""}">
+      `;
+      document.getElementById("modalEditarTitle").innerHTML = '<i class="fas fa-user-edit"></i> Editar Membro';
+    } 
+    else if (tipo === "dizimo") {
+      item = dados.dizimos.find(d => d.id === id);
+      html = `
+        <label>Nome:</label>
+        <input type="text" id="editNome" value="${item.nome}">
+        <label>Valor (R$):</label>
+        <input type="number" id="editValor" value="${item.valor}" step="0.01">
+        <label>Data:</label>
+        <input type="date" id="editData" value="${item.data}">
+      `;
+      document.getElementById("modalEditarTitle").innerHTML = '<i class="fas fa-edit"></i> Editar Dízimo';
+    }
+    else if (tipo === "oferta") {
+      item = dados.ofertas.find(o => o.id === id);
+      html = `
+        <label>Nome:</label>
+        <input type="text" id="editNome" value="${item.nome}">
+        <label>Valor (R$):</label>
+        <input type="number" id="editValor" value="${item.valor}" step="0.01">
+        <label>Data:</label>
+        <input type="date" id="editData" value="${item.data}">
+      `;
+      document.getElementById("modalEditarTitle").innerHTML = '<i class="fas fa-edit"></i> Editar Oferta';
+    }
+    else if (tipo === "escola") {
+      item = dados.escolaDominical.find(e => e.id === id);
+      html = `
+        <label>Nome:</label>
+        <input type="text" id="editNome" value="${item.nome}">
+        <label>Data:</label>
+        <input type="date" id="editData" value="${item.data}">
+        <label>Status:</label>
+        <select id="editPresente">
+          <option value="true" ${item.presente ? "selected" : ""}>✅ Presente</option>
+          <option value="false" ${!item.presente ? "selected" : ""}>❌ Ausente</option>
+        </select>
+      `;
+      document.getElementById("modalEditarTitle").innerHTML = '<i class="fas fa-edit"></i> Editar Registro';
+    }
+    else if (tipo === "evento") {
+      item = dados.eventos.find(e => e.id === id);
+      html = `
+        <label>Título:</label>
+        <input type="text" id="editTitulo" value="${item.titulo}">
+        <label>Data:</label>
+        <input type="date" id="editData" value="${item.data}">
+        <label>Hora:</label>
+        <input type="time" id="editHora" value="${item.hora || ""}">
+      `;
+      document.getElementById("modalEditarTitle").innerHTML = '<i class="fas fa-edit"></i> Editar Evento';
+    }
+    
+    document.getElementById("modalEditarCampos").innerHTML = html;
+    document.getElementById("modalEditar").style.display = "flex";
+  }
+
+  function salvarEdicao() {
+    if (currentEditType === "membro") {
+      const idx = dados.membros.findIndex(m => m.id === currentEditId);
+      if (idx !== -1) {
+        dados.membros[idx].nome = document.getElementById("editNome").value;
+        dados.membros[idx].nascimento = document.getElementById("editNascimento").value;
+        mostrarToast("Membro editado!");
+      }
+    }
+    else if (currentEditType === "dizimo") {
+      const idx = dados.dizimos.findIndex(d => d.id === currentEditId);
+      if (idx !== -1) {
+        dados.dizimos[idx].nome = document.getElementById("editNome").value;
+        dados.dizimos[idx].valor = parseFloat(document.getElementById("editValor").value);
+        dados.dizimos[idx].data = document.getElementById("editData").value;
+        mostrarToast("Dízimo editado!");
+      }
+    }
+    else if (currentEditType === "oferta") {
+      const idx = dados.ofertas.findIndex(o => o.id === currentEditId);
+      if (idx !== -1) {
+        dados.ofertas[idx].nome = document.getElementById("editNome").value;
+        dados.ofertas[idx].valor = parseFloat(document.getElementById("editValor").value);
+        dados.ofertas[idx].data = document.getElementById("editData").value;
+        mostrarToast("Oferta editada!");
+      }
+    }
+    else if (currentEditType === "escola") {
+      const idx = dados.escolaDominical.findIndex(e => e.id === currentEditId);
+      if (idx !== -1) {
+        dados.escolaDominical[idx].nome = document.getElementById("editNome").value;
+        dados.escolaDominical[idx].data = document.getElementById("editData").value;
+        dados.escolaDominical[idx].presente = document.getElementById("editPresente").value === "true";
+        mostrarToast("Registro editado!");
+      }
+    }
+    else if (currentEditType === "evento") {
+      const idx = dados.eventos.findIndex(e => e.id === currentEditId);
+      if (idx !== -1) {
+        dados.eventos[idx].titulo = document.getElementById("editTitulo").value;
+        dados.eventos[idx].data = document.getElementById("editData").value;
+        dados.eventos[idx].hora = document.getElementById("editHora").value;
+        mostrarToast("Evento editado!");
+      }
+    }
+    
+    salvarDados();
+    renderizarTudo();
+    fecharModalEditar();
+  }
+
+  function fecharModalEditar() {
+    document.getElementById("modalEditar").style.display = "none";
+    currentEditType = null;
+    currentEditId = null;
+  }
+
+  // ========== CRUD ==========
+  function adicionarMembro() {
+    const nome = document.getElementById("membroNome").value.trim();
+    const nasc = document.getElementById("membroNascimento").value;
+    if (!nome) return alert("Digite o nome!");
+    dados.membros.push({ id: Date.now(), nome, nascimento: nasc });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("membroNome").value = "";
+    document.getElementById("membroNascimento").value = "";
+    mostrarToast("Membro adicionado!");
+  }
+  function removerMembro(id) { 
+    if(confirm("Remover este membro?")) {
+      dados.membros = dados.membros.filter(m => m.id !== id); 
+      salvarDados(); 
+      renderizarTudo(); 
+      mostrarToast("Membro removido!");
+    }
+  }
+  
+  function adicionarDizimo() {
+    const nome = document.getElementById("dizimistaNome").value.trim();
+    const valor = parseFloat(document.getElementById("dizimoValor").value);
+    const data = document.getElementById("dizimoData").value;
+    if (!nome || isNaN(valor)) return alert("Preencha nome e valor!");
+    dados.dizimos.push({ id: Date.now(), nome, valor, data });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("dizimistaNome").value = "";
+    document.getElementById("dizimoValor").value = "";
+    document.getElementById("dizimoData").value = "";
+    mostrarToast("Dízimo registrado!");
+  }
+  function removerDizimo(id) { 
+    if(confirm("Remover este dízimo?")) {
+      dados.dizimos = dados.dizimos.filter(d => d.id !== id); 
+      salvarDados(); 
+      renderizarTudo();
+      mostrarToast("Dízimo removido!");
+    }
+  }
+  
+  function adicionarOferta() {
+    const nome = document.getElementById("ofertanteNome").value.trim();
+    const valor = parseFloat(document.getElementById("ofertaValor").value);
+    const data = document.getElementById("ofertaData").value;
+    if (!nome || isNaN(valor)) return alert("Preencha nome e valor!");
+    dados.ofertas.push({ id: Date.now(), nome, valor, data });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("ofertanteNome").value = "";
+    document.getElementById("ofertaValor").value = "";
+    document.getElementById("ofertaData").value = "";
+    mostrarToast("Oferta registrada!");
+  }
+  function removerOferta(id) { 
+    if(confirm("Remover esta oferta?")) {
+      dados.ofertas = dados.ofertas.filter(o => o.id !== id); 
+      salvarDados(); 
+      renderizarTudo();
+      mostrarToast("Oferta removida!");
+    }
+  }
+  
+  function registrarPresenca() {
+    const nome = document.getElementById("edNome").value.trim();
+    const data = document.getElementById("edData").value;
+    if (!nome || !data) return alert("Preencha nome e data!");
+    dados.escolaDominical.push({ id: Date.now(), nome, data, presente: true });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("edNome").value = "";
+    document.getElementById("edData").value = "";
+    mostrarToast("Presença registrada!");
+  }
+  function registrarFalta() {
+    const nome = document.getElementById("edNome").value.trim();
+    const data = document.getElementById("edData").value;
+    if (!nome || !data) return alert("Preencha nome e data!");
+    dados.escolaDominical.push({ id: Date.now(), nome, data, presente: false });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("edNome").value = "";
+    document.getElementById("edData").value = "";
+    mostrarToast("Falta registrada!");
+  }
+  function removerEscola(id) { 
+    if(confirm("Remover este registro?")) {
+      dados.escolaDominical = dados.escolaDominical.filter(e => e.id !== id); 
+      salvarDados(); 
+      renderizarTudo();
+      mostrarToast("Registro removido!");
+    }
+  }
+  
+  function adicionarEvento() {
+    const titulo = document.getElementById("eventoTitulo").value.trim();
+    const data = document.getElementById("eventoData").value;
+    const hora = document.getElementById("eventoHora").value;
+    if (!titulo || !data) return alert("Preencha título e data!");
+    dados.eventos.push({ id: Date.now(), titulo, data, hora });
+    salvarDados();
+    renderizarTudo();
+    document.getElementById("eventoTitulo").value = "";
+    document.getElementById("eventoData").value = "";
+    document.getElementById("eventoHora").value = "";
+    mostrarToast("Evento adicionado!");
+  }
+  function removerEvento(id) { 
+    if(confirm("Remover este evento?")) {
+      dados.eventos = dados.eventos.filter(e => e.id !== id); 
+      salvarDados(); 
+      renderizarTudo();
+      mostrarToast("Evento removido!");
+    }
+  }
+  
+  // Líderes
+  function abrirModalLider() {
+    currentLiderEditId = null;
+    document.getElementById("modalLiderTitle").innerHTML = '<i class="fas fa-user-plus"></i> Adicionar Líder';
+    document.getElementById("liderNome").value = "";
+    document.getElementById("liderCargo").value = "Pastor Presidente";
+    document.getElementById("liderNascimento").value = "";
+    document.getElementById("liderTelefone").value = "";
+    document.getElementById("liderEmail").value = "";
+    document.getElementById("modalLider").style.display = "flex";
+  }
+  function editarLider(id) {
+    const lider = dados.lideres.find(l => l.id === id);
+    if (!lider) return;
+    currentLiderEditId = id;
+    document.getElementById("modalLiderTitle").innerHTML = '<i class="fas fa-edit"></i> Editar Líder';
+    document.getElementById("liderNome").value = lider.nome;
+    document.getElementById("liderCargo").value = lider.cargo;
+    document.getElementById("liderNascimento").value = lider.nascimento || "";
+    document.getElementById("liderTelefone").value = lider.telefone || "";
+    document.getElementById("liderEmail").value = lider.email || "";
+    document.getElementById("modalLider").style.display = "flex";
+  }
+  function salvarLider() {
+    const nome = document.getElementById("liderNome").value.trim();
+    const cargo = document.getElementById("liderCargo").value;
+    const nascimento = document.getElementById("liderNascimento").value;
+    const telefone = document.getElementById("liderTelefone").value;
+    const email = document.getElementById("liderEmail").value;
+    if (!nome) return alert("Digite o nome do líder!");
+    if (currentLiderEditId) {
+      const idx = dados.lideres.findIndex(l => l.id === currentLiderEditId);
+      if (idx !== -1) {
+        dados.lideres[idx] = { ...dados.lideres[idx], nome, cargo, nascimento, telefone, email };
+      }
+    } else {
+      dados.lideres.push({ id: Date.now(), nome, cargo, nascimento, telefone, email });
+    }
+    salvarDados();
+    renderizarTudo();
+    fecharModalLider();
+    mostrarToast("Líder salvo!");
+  }
+  function removerLider(id) { 
+    if(confirm("Remover este líder?")) {
+      dados.lideres = dados.lideres.filter(l => l.id !== id); 
+      salvarDados(); 
+      renderizarTudo(); 
+      mostrarToast("Líder removido!");
+    }
+  }
+  function fecharModalLider() { document.getElementById("modalLider").style.display = "none"; }
+
+  // Renderização
+  function renderizarTudo() {
+    // Membros
+    const membrosHtml = dados.membros.map(m => `
+      <div class="list-item">
+        <div class="list-item-info">
+          <strong>${m.nome}</strong><br>
+          <small>📅 Nasc: ${m.nascimento ? new Date(m.nascimento).toLocaleDateString('pt-BR') : "—"}</small>
+        </div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('membro', ${m.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerMembro(${m.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaMembros").innerHTML = membrosHtml || "<div style='text-align:center;padding:1rem;'>Nenhum membro</div>";
+    document.getElementById("contMembros").innerHTML = `👥 ${dados.membros.length} membros`;
+    
+    // Dízimos
+    const dizimosHtml = dados.dizimos.map(d => `
+      <div class="list-item">
+        <div><strong>${d.nome}</strong><br><small>📅 ${new Date(d.data).toLocaleDateString('pt-BR')} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('dizimo', ${d.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerDizimo(${d.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaDizimos").innerHTML = dizimosHtml || "<div style='text-align:center;padding:1rem;'>Nenhum dízimo</div>";
+    const totalDizimos = dados.dizimos.reduce((acc, d) => acc + d.valor, 0);
+    document.getElementById("totalDizimos").innerHTML = `💰 Total: R$ ${totalDizimos.toFixed(2)}`;
+    
+    // Ofertas
+    const ofertasHtml = dados.ofertas.map(o => `
+      <div class="list-item">
+        <div><strong>${o.nome}</strong><br><small>📅 ${new Date(o.data).toLocaleDateString('pt-BR')} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('oferta', ${o.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerOferta(${o.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaOfertas").innerHTML = ofertasHtml || "<div style='text-align:center;padding:1rem;'>Nenhuma oferta</div>";
+    const totalOfertas = dados.ofertas.reduce((acc, o) => acc + o.valor, 0);
+    document.getElementById("totalOfertas").innerHTML = `💰 Total: R$ ${totalOfertas.toFixed(2)}`;
+    
+    // Líderes
+    const lideresHtml = dados.lideres.map(l => `
+      <div class="list-item">
+        <div><strong>${l.nome}</strong><br><small>📌 ${l.cargo} | 📅 Nasc: ${l.nascimento ? new Date(l.nascimento).toLocaleDateString('pt-BR') : "—"} | 📞 ${l.telefone || "—"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="editarLider(${l.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerLider(${l.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("lideresList").innerHTML = lideresHtml || "<div style='text-align:center;padding:1rem;'>Nenhum líder</div>";
+    document.getElementById("contLideres").innerHTML = `👑 ${dados.lideres.length} líderes`;
+    
+    // Escola Dominical
+    const escolaHtml = dados.escolaDominical.map(e => `
+      <div class="list-item">
+        <div><strong>${e.nome}</strong><br><small>📅 ${new Date(e.data).toLocaleDateString('pt-BR')} | ${e.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('escola', ${e.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerEscola(${e.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaEscolaDominical").innerHTML = escolaHtml || "<div style='text-align:center;padding:1rem;'>Nenhum registro</div>";
+    const presentes = dados.escolaDominical.filter(e => e.presente).length;
+    const ausentes = dados.escolaDominical.length - presentes;
+    document.getElementById("totalEDPresentes").innerHTML = presentes;
+    document.getElementById("totalEDAusentes").innerHTML = ausentes;
+    
+    // Eventos
+    const eventosHtml = dados.eventos.map(e => `
+      <div class="list-item">
+        <div><strong>${e.titulo}</strong><br><small>📅 ${new Date(e.data).toLocaleDateString('pt-BR')} | ⏰ ${e.hora || "—"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('evento', ${e.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerEvento(${e.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaEventos").innerHTML = eventosHtml || "<div style='text-align:center;padding:1rem;'>Nenhum evento</div>";
+    
+    // ATUALIZA ANIVERSARIANTES (LÍDERES + MEMBROS)
+    atualizarAniversariantes();
+  }
+
+  // Buscas
+  document.getElementById("searchMembros")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.membros.filter(m => m.nome.toLowerCase().includes(term)).map(m => `
+      <div class="list-item">
+        <div><strong>${m.nome}</strong><br><small>📅 Nasc: ${m.nascimento ? new Date(m.nascimento).toLocaleDateString('pt-BR') : "—"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('membro', ${m.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerMembro(${m.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaMembros").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+  });
+  
+  document.getElementById("searchLideres")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.lideres.filter(l => l.nome.toLowerCase().includes(term)).map(l => `
+      <div class="list-item">
+        <div><strong>${l.nome}</strong><br><small>📌 ${l.cargo}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="editarLider(${l.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerLider(${l.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("lideresList").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+  });
+  
+  document.getElementById("searchDizimos")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.dizimos.filter(d => d.nome.toLowerCase().includes(term)).map(d => `
+      <div class="list-item">
+        <div><strong>${d.nome}</strong><br><small>📅 ${new Date(d.data).toLocaleDateString('pt-BR')} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('dizimo', ${d.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerDizimo(${d.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaDizimos").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+    const total = dados.dizimos.filter(d => d.nome.toLowerCase().includes(term)).reduce((acc, d) => acc + d.valor, 0);
+    document.getElementById("totalDizimos").innerHTML = `💰 Total: R$ ${total.toFixed(2)}`;
+  });
+  
+  document.getElementById("searchOfertas")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.ofertas.filter(o => o.nome.toLowerCase().includes(term)).map(o => `
+      <div class="list-item">
+        <div><strong>${o.nome}</strong><br><small>📅 ${new Date(o.data).toLocaleDateString('pt-BR')} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('oferta', ${o.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerOferta(${o.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaOfertas").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+    const total = dados.ofertas.filter(o => o.nome.toLowerCase().includes(term)).reduce((acc, o) => acc + o.valor, 0);
+    document.getElementById("totalOfertas").innerHTML = `💰 Total: R$ ${total.toFixed(2)}`;
+  });
+  
+  document.getElementById("searchEscola")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.escolaDominical.filter(ed => ed.nome.toLowerCase().includes(term)).map(ed => `
+      <div class="list-item">
+        <div><strong>${ed.nome}</strong><br><small>📅 ${new Date(ed.data).toLocaleDateString('pt-BR')} | ${ed.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('escola', ${ed.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerEscola(${ed.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaEscolaDominical").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+  });
+  
+  document.getElementById("searchEventos")?.addEventListener("input", (e) => {
+    const term = e.target.value.toLowerCase();
+    const html = dados.eventos.filter(ev => ev.titulo.toLowerCase().includes(term)).map(ev => `
+      <div class="list-item">
+        <div><strong>${ev.titulo}</strong><br><small>📅 ${new Date(ev.data).toLocaleDateString('pt-BR')} | ⏰ ${ev.hora || "—"}</small></div>
+        <div class="list-item-actions">
+          <button class="btn-small btn-edit" onclick="abrirModalEditar('evento', ${ev.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn-small btn-danger" onclick="removerEvento(${ev.id})"><i class="fas fa-trash"></i></button>
+        </div>
+      </div>
+    `).join("");
+    document.getElementById("listaEventos").innerHTML = html || "<div style='text-align:center;padding:1rem;'>Nenhum resultado</div>";
+  });
+
+  // Partículas
+  function criarParticulas() {
+    const container = document.getElementById("particlesContainer");
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement("div");
+      p.classList.add("particle");
+      p.style.width = `${Math.random() * 6 + 2}px`;
+      p.style.height = p.style.width;
+      p.style.left = `${Math.random() * 100}%`;
+      p.style.animationDelay = `${Math.random() * 12}s`;
+      p.style.animationDuration = `${Math.random() * 10 + 8}s`;
+      container.appendChild(p);
+    }
+  }
+  
+  // Inicialização
+  carregarDados();
+  renderizarTudo();
+  criarParticulas();
+</script>
+</body>
+</html>
