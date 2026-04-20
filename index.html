@@ -23,7 +23,7 @@
     transition: all 0.3s ease;
   }
 
-  /* Tema Claro */
+  /* Tema Claro (Dia) - Moderno */
   body.tema-claro {
     background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
     color: #1a2a3a;
@@ -40,6 +40,8 @@
 
   body.tema-claro .card,
   body.tema-claro .church-header,
+  body.tema-claro .birthday-card,
+  body.tema-claro .leaders-card,
   body.tema-claro .footer {
     background: rgba(255,255,255,0.85);
     backdrop-filter: blur(16px);
@@ -61,6 +63,10 @@
     background: rgba(0,0,0,0.06);
   }
 
+  body.tema-claro button {
+    background: linear-gradient(105deg, #0088b3, #00a67e);
+  }
+
   body.tema-claro .search-input {
     background: rgba(255,255,255,0.9);
     color: #1a2a3a;
@@ -72,7 +78,7 @@
     color: white;
   }
 
-  /* Tema Escuro */
+  /* Tema Escuro (Noite) */
   body.tema-escuro {
     background: #0a0f1a;
     color: #eef2ff;
@@ -89,6 +95,8 @@
 
   body.tema-escuro .card,
   body.tema-escuro .church-header,
+  body.tema-escuro .birthday-card,
+  body.tema-escuro .leaders-card,
   body.tema-escuro .footer {
     background: rgba(12,22,35,0.7);
     backdrop-filter: blur(14px);
@@ -228,23 +236,23 @@
     cursor: pointer;
     transition: 0.2s;
   }
-  
+
   .donate-btn-header, .donate-btn-footer {
     background: linear-gradient(105deg, #f39c12, #e67e22);
     border: none;
     color: white;
     font-weight: 600;
   }
-  
+
   .donate-btn-header i, .donate-btn-footer i {
     color: white;
   }
-  
+
   .donate-btn-header:hover, .donate-btn-footer:hover {
     transform: translateY(-2px);
     filter: brightness(1.05);
   }
-  
+
   .edit-church-btn:hover, .backup-btn:hover, .theme-btn:hover {
     background: rgba(255,200,80,0.3);
     transform: translateY(-2px);
@@ -429,35 +437,28 @@
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
-    margin-top: 0.5rem;
-    max-height: 200px;
-    overflow-y: auto;
+    margin-bottom: 1rem;
   }
   .birthday-tag {
     background: rgba(245,197,66,0.2);
     border-radius: 2rem;
-    padding: 0.5rem 1rem;
+    padding: 0.3rem 1rem;
     font-size: 0.85rem;
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-  }
-  .birthday-tag i {
-    color: #f39c12;
   }
   .leader-badge {
     background: #27ae60;
     border-radius: 1rem;
     padding: 0.1rem 0.5rem;
     font-size: 0.65rem;
-    margin-left: 0.5rem;
   }
   .member-badge {
     background: #3498db;
     border-radius: 1rem;
     padding: 0.1rem 0.5rem;
     font-size: 0.65rem;
-    margin-left: 0.5rem;
   }
 
   /* Footer */
@@ -627,7 +628,7 @@
       <div class="badge-count" id="contMembros">👥 0 membros</div>
     </div>
 
-    <!-- 3. DÍZIMOS -->
+    <!-- 3. DÍZIMOS (COM DATA) -->
     <div class="card">
       <div class="card-header">
         <div class="card-header-left"><i class="fas fa-hand-holding-usd"></i> Dízimos</div>
@@ -645,7 +646,7 @@
       <div class="total-row" id="totalDizimos">💰 Total: R$ 0,00</div>
     </div>
 
-    <!-- 4. OFERTAS -->
+    <!-- 4. OFERTAS (COM DATA) -->
     <div class="card">
       <div class="card-header">
         <div class="card-header-left"><i class="fas fa-gift"></i> Ofertas</div>
@@ -684,16 +685,20 @@
       <div class="list-container" id="listaEscolaDominical"></div>
     </div>
 
-    <!-- 6. ANIVERSARIANTES DO MÊS (LÍDERES + MEMBROS) -->
+    <!-- 6. ANIVERSARIANTES DO MÊS (SEPARADOS) -->
     <div class="card">
       <div class="card-header">
         <div class="card-header-left"><i class="fas fa-birthday-cake"></i> Aniversariantes do Mês</div>
-        <span class="badge-count" id="totalAniversariantes">🎂 0 aniversariantes</span>
       </div>
-      <div id="aniversariantesList" class="birthday-list">Carregando...</div>
+      <div id="aniversariantesLideres" class="birthday-list">
+        <div style="width:100%; text-align:center; padding:0.5rem;">Carregando líderes...</div>
+      </div>
+      <div id="aniversariantesMembros" class="birthday-list">
+        <div style="width:100%; text-align:center; padding:0.5rem;">Carregando membros...</div>
+      </div>
     </div>
 
-    <!-- 7. AGENDA -->
+    <!-- 7. AGENDA (POR ÚLTIMO) -->
     <div class="card">
       <div class="card-header">
         <div class="card-header-left"><i class="fas fa-calendar-alt"></i> Agenda</div>
@@ -711,7 +716,7 @@
     </div>
   </div>
 
-  <!-- RODAPÉ -->
+  <!-- RODAPÉ COM BOTÃO DE DOAÇÃO -->
   <div class="footer">
     <div class="footer-content">
       <button class="donate-btn-footer" onclick="window.open('https://mpago.la/1Knf73g', '_blank')">
@@ -795,22 +800,46 @@
 </div>
 
 <script>
-  // Dados
+  // Dados iniciais
   let dados = {
     igreja: "✝️ IGREJA VIVA ✝️",
-    lideres: [],
-    membros: [],
-    dizimos: [],
-    ofertas: [],
-    escolaDominical: [],
-    eventos: []
+    lideres: [
+      { id: Date.now()+1, nome: "Pr. José Almeida", cargo: "Pastor Presidente", nascimento: "1975-03-15", telefone: "(11) 98765-4321", email: "pastor@igrejaviva.com" }
+    ],
+    membros: [
+      { id: Date.now()+2, nome: "Maria Silva", nascimento: "1990-05-20" },
+      { id: Date.now()+3, nome: "João Santos", nascimento: "1985-03-10" }
+    ],
+    dizimos: [
+      { id: Date.now()+4, nome: "João Santos", valor: 150.00, data: "2025-03-01" }
+    ],
+    ofertas: [
+      { id: Date.now()+5, nome: "Ana Costa", valor: 80.00, data: "2025-03-02" }
+    ],
+    escolaDominical: [
+      { id: Date.now()+6, nome: "Carlos Souza", data: "2025-03-10", presente: true }
+    ],
+    eventos: [
+      { id: Date.now()+7, titulo: "Culto de Oração", data: "2025-03-15", hora: "19:00" }
+    ]
   };
 
   let currentEditType = null;
   let currentEditId = null;
   let currentLiderEditId = null;
 
-  // Salvar/Ler localStorage
+  // ========== FUNÇÃO PARA FORMATAR DATA CORRETAMENTE (SEM FUSO HORÁRIO) ==========
+  function formatarDataBr(dataISO) {
+    if (!dataISO) return "—";
+    // Mantém a data exata sem conversão de fuso horário
+    const partes = dataISO.split('-');
+    if (partes.length === 3) {
+      return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    }
+    return dataISO;
+  }
+
+  // Salvar no localStorage
   function salvarDados() {
     localStorage.setItem("igrejaVivaData", JSON.stringify(dados));
   }
@@ -820,33 +849,6 @@
     if (saved) {
       dados = JSON.parse(saved);
     } else {
-      // Dados iniciais com datas de nascimento para teste de aniversariantes
-      const hoje = new Date();
-      const mesAtual = hoje.getMonth() + 1;
-      const diaAtual = hoje.getDate();
-      
-      dados = {
-        igreja: "✝️ IGREJA VIVA ✝️",
-        lideres: [
-          { id: Date.now()+1, nome: "Pr. José Almeida", cargo: "Pastor Presidente", nascimento: `1975-${String(mesAtual).padStart(2,'0')}-${String(diaAtual).padStart(2,'0')}`, telefone: "(11) 98765-4321", email: "pastor@igrejaviva.com" }
-        ],
-        membros: [
-          { id: Date.now()+2, nome: "Maria Silva", nascimento: `1990-${String(mesAtual).padStart(2,'0')}-15` },
-          { id: Date.now()+3, nome: "João Santos", nascimento: `1985-${String(mesAtual).padStart(2,'0')}-20` }
-        ],
-        dizimos: [
-          { id: Date.now()+4, nome: "João Santos", valor: 150.00, data: "2025-03-01" }
-        ],
-        ofertas: [
-          { id: Date.now()+5, nome: "Ana Costa", valor: 80.00, data: "2025-03-02" }
-        ],
-        escolaDominical: [
-          { id: Date.now()+6, nome: "Carlos Souza", data: "2025-03-10", presente: true }
-        ],
-        eventos: [
-          { id: Date.now()+7, titulo: "Culto de Oração", data: "2025-03-15", hora: "19:00" }
-        ]
-      };
       salvarDados();
     }
     document.getElementById("churchNameDisplay").innerText = dados.igreja;
@@ -915,85 +917,6 @@
       reader.readAsText(file);
     };
     input.click();
-  }
-
-  // ========== FUNÇÃO DE ANIVERSARIANTES (LÍDERES + MEMBROS) ==========
-  function atualizarAniversariantes() {
-    const hoje = new Date();
-    const mesAtual = hoje.getMonth() + 1;
-    const diaAtual = hoje.getDate();
-    
-    // Coleta aniversariantes de líderes e membros
-    const aniversariantes = [];
-    
-    // Adiciona líderes com data de nascimento
-    dados.lideres.forEach(lider => {
-      if (lider.nascimento) {
-        const partes = lider.nascimento.split('-');
-        if (partes.length === 3) {
-          const mes = parseInt(partes[1]);
-          const dia = parseInt(partes[2]);
-          if (mes === mesAtual) {
-            aniversariantes.push({
-              nome: lider.nome,
-              tipo: "líder",
-              cargo: lider.cargo,
-              dia: dia,
-              dataCompleta: lider.nascimento
-            });
-          }
-        }
-      }
-    });
-    
-    // Adiciona membros com data de nascimento
-    dados.membros.forEach(membro => {
-      if (membro.nascimento) {
-        const partes = membro.nascimento.split('-');
-        if (partes.length === 3) {
-          const mes = parseInt(partes[1]);
-          const dia = parseInt(partes[2]);
-          if (mes === mesAtual) {
-            aniversariantes.push({
-              nome: membro.nome,
-              tipo: "membro",
-              cargo: null,
-              dia: dia,
-              dataCompleta: membro.nascimento
-            });
-          }
-        }
-      }
-    });
-    
-    // Ordena por dia do mês
-    aniversariantes.sort((a, b) => a.dia - b.dia);
-    
-    // Renderiza
-    const container = document.getElementById("aniversariantesList");
-    const totalSpan = document.getElementById("totalAniversariantes");
-    
-    if (aniversariantes.length === 0) {
-      container.innerHTML = '<div style="text-align:center;padding:1rem;opacity:0.7;"><i class="fas fa-birthday-cake"></i> Nenhum aniversariante neste mês</div>';
-      totalSpan.innerHTML = "🎂 0 aniversariantes";
-      return;
-    }
-    
-    totalSpan.innerHTML = `🎂 ${aniversariantes.length} aniversariante${aniversariantes.length !== 1 ? 's' : ''}`;
-    
-    container.innerHTML = aniversariantes.map(p => {
-      const hojeEDia = p.dia === diaAtual;
-      return `
-        <div class="birthday-tag" style="${hojeEDia ? 'background: rgba(245,197,66,0.4); border: 1px solid #F5C542;' : ''}">
-          <i class="fas fa-birthday-cake"></i>
-          <strong>${p.nome}</strong>
-          <span class="${p.tipo === 'líder' ? 'leader-badge' : 'member-badge'}">
-            ${p.tipo === 'líder' ? `👑 ${p.cargo}` : '🙏 Membro'}
-          </span>
-          ${hojeEDia ? '<span style="color:#F5C542;">🎉 HOJE!</span>' : `<small>Dia ${p.dia}</small>`}
-        </div>
-      `;
-    }).join("");
   }
 
   // ========== FUNÇÕES DE EDIÇÃO ==========
@@ -1245,7 +1168,7 @@
     }
   }
   
-  // Líderes
+  // Líderes Modal
   function abrirModalLider() {
     currentLiderEditId = null;
     document.getElementById("modalLiderTitle").innerHTML = '<i class="fas fa-user-plus"></i> Adicionar Líder';
@@ -1298,14 +1221,87 @@
   }
   function fecharModalLider() { document.getElementById("modalLider").style.display = "none"; }
 
-  // Renderização
+  // ========== ANIVERSARIANTES SEPARADOS (CORRIGIDO) ==========
+  function atualizarAniversariantes() {
+    const hoje = new Date();
+    const mesAtual = hoje.getMonth() + 1;
+    const diaAtual = hoje.getDate();
+    
+    // Filtra líderes aniversariantes (compara mês diretamente da string ISO)
+    const lideresAniversariantes = dados.lideres.filter(l => {
+      if (!l.nascimento) return false;
+      const mes = parseInt(l.nascimento.split("-")[1]);
+      return mes === mesAtual;
+    }).sort((a, b) => {
+      const diaA = parseInt(a.nascimento.split("-")[2]);
+      const diaB = parseInt(b.nascimento.split("-")[2]);
+      return diaA - diaB;
+    });
+    
+    // Filtra membros aniversariantes
+    const membrosAniversariantes = dados.membros.filter(m => {
+      if (!m.nascimento) return false;
+      const mes = parseInt(m.nascimento.split("-")[1]);
+      return mes === mesAtual;
+    }).sort((a, b) => {
+      const diaA = parseInt(a.nascimento.split("-")[2]);
+      const diaB = parseInt(b.nascimento.split("-")[2]);
+      return diaA - diaB;
+    });
+    
+    // Renderiza líderes aniversariantes
+    const lideresContainer = document.getElementById("aniversariantesLideres");
+    if (lideresAniversariantes.length === 0) {
+      lideresContainer.innerHTML = '<div style="width:100%; text-align:center; padding:0.5rem; opacity:0.7;"><i class="fas fa-church"></i> Nenhum líder aniversariante este mês</div>';
+    } else {
+      lideresContainer.innerHTML = `
+        <div style="width:100%; margin-bottom:0.5rem;"><strong><i class="fas fa-chalkboard-user"></i> LÍDERES</strong></div>
+        ${lideresAniversariantes.map(l => {
+          const dia = parseInt(l.nascimento.split("-")[2]);
+          const ehHoje = dia === diaAtual;
+          return `
+            <span class="birthday-tag" style="${ehHoje ? 'background: rgba(245,197,66,0.4); border: 1px solid #F5C542;' : ''}">
+              <i class="fas fa-birthday-cake"></i>
+              <strong>${l.nome}</strong>
+              <span class="leader-badge">👑 ${l.cargo}</span>
+              ${ehHoje ? '<span style="color:#F5C542;">🎉 HOJE!</span>' : `<small>Dia ${dia}</small>`}
+            </span>
+          `;
+        }).join('')}
+      `;
+    }
+    
+    // Renderiza membros aniversariantes
+    const membrosContainer = document.getElementById("aniversariantesMembros");
+    if (membrosAniversariantes.length === 0) {
+      membrosContainer.innerHTML = '<div style="width:100%; text-align:center; padding:0.5rem; opacity:0.7;"><i class="fas fa-users"></i> Nenhum membro aniversariante este mês</div>';
+    } else {
+      membrosContainer.innerHTML = `
+        <div style="width:100%; margin-bottom:0.5rem; margin-top:0.5rem;"><strong><i class="fas fa-users"></i> MEMBROS</strong></div>
+        ${membrosAniversariantes.map(m => {
+          const dia = parseInt(m.nascimento.split("-")[2]);
+          const ehHoje = dia === diaAtual;
+          return `
+            <span class="birthday-tag" style="${ehHoje ? 'background: rgba(245,197,66,0.4); border: 1px solid #F5C542;' : ''}">
+              <i class="fas fa-birthday-cake"></i>
+              <strong>${m.nome}</strong>
+              <span class="member-badge">🙏 Membro</span>
+              ${ehHoje ? '<span style="color:#F5C542;">🎉 HOJE!</span>' : `<small>Dia ${dia}</small>`}
+            </span>
+          `;
+        }).join('')}
+      `;
+    }
+  }
+
+  // Renderização completa (com datas corrigidas)
   function renderizarTudo() {
-    // Membros
+    // Membros (COM BOTÃO EDITAR e DATA CORRETA)
     const membrosHtml = dados.membros.map(m => `
       <div class="list-item">
         <div class="list-item-info">
           <strong>${m.nome}</strong><br>
-          <small>📅 Nasc: ${m.nascimento ? new Date(m.nascimento).toLocaleDateString('pt-BR') : "—"}</small>
+          <small>📅 Nasc: ${formatarDataBr(m.nascimento)}</small>
         </div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('membro', ${m.id})"><i class="fas fa-edit"></i></button>
@@ -1316,10 +1312,10 @@
     document.getElementById("listaMembros").innerHTML = membrosHtml || "<div style='text-align:center;padding:1rem;'>Nenhum membro</div>";
     document.getElementById("contMembros").innerHTML = `👥 ${dados.membros.length} membros`;
     
-    // Dízimos
+    // Dízimos (COM BOTÃO EDITAR e DATA CORRETA)
     const dizimosHtml = dados.dizimos.map(d => `
       <div class="list-item">
-        <div><strong>${d.nome}</strong><br><small>📅 ${new Date(d.data).toLocaleDateString('pt-BR')} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
+        <div><strong>${d.nome}</strong><br><small>📅 ${formatarDataBr(d.data)} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('dizimo', ${d.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerDizimo(${d.id})"><i class="fas fa-trash"></i></button>
@@ -1330,10 +1326,10 @@
     const totalDizimos = dados.dizimos.reduce((acc, d) => acc + d.valor, 0);
     document.getElementById("totalDizimos").innerHTML = `💰 Total: R$ ${totalDizimos.toFixed(2)}`;
     
-    // Ofertas
+    // Ofertas (COM BOTÃO EDITAR e DATA CORRETA)
     const ofertasHtml = dados.ofertas.map(o => `
       <div class="list-item">
-        <div><strong>${o.nome}</strong><br><small>📅 ${new Date(o.data).toLocaleDateString('pt-BR')} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
+        <div><strong>${o.nome}</strong><br><small>📅 ${formatarDataBr(o.data)} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('oferta', ${o.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerOferta(${o.id})"><i class="fas fa-trash"></i></button>
@@ -1344,10 +1340,10 @@
     const totalOfertas = dados.ofertas.reduce((acc, o) => acc + o.valor, 0);
     document.getElementById("totalOfertas").innerHTML = `💰 Total: R$ ${totalOfertas.toFixed(2)}`;
     
-    // Líderes
+    // Líderes (já tem editar e DATA CORRETA)
     const lideresHtml = dados.lideres.map(l => `
       <div class="list-item">
-        <div><strong>${l.nome}</strong><br><small>📌 ${l.cargo} | 📅 Nasc: ${l.nascimento ? new Date(l.nascimento).toLocaleDateString('pt-BR') : "—"} | 📞 ${l.telefone || "—"}</small></div>
+        <div><strong>${l.nome}</strong><br><small>📌 ${l.cargo} | 📅 Nasc: ${formatarDataBr(l.nascimento)} | 📞 ${l.telefone || "—"}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="editarLider(${l.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerLider(${l.id})"><i class="fas fa-trash"></i></button>
@@ -1357,10 +1353,10 @@
     document.getElementById("lideresList").innerHTML = lideresHtml || "<div style='text-align:center;padding:1rem;'>Nenhum líder</div>";
     document.getElementById("contLideres").innerHTML = `👑 ${dados.lideres.length} líderes`;
     
-    // Escola Dominical
+    // Escola Dominical (COM BOTÃO EDITAR e DATA CORRETA)
     const escolaHtml = dados.escolaDominical.map(e => `
       <div class="list-item">
-        <div><strong>${e.nome}</strong><br><small>📅 ${new Date(e.data).toLocaleDateString('pt-BR')} | ${e.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
+        <div><strong>${e.nome}</strong><br><small>📅 ${formatarDataBr(e.data)} | ${e.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('escola', ${e.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerEscola(${e.id})"><i class="fas fa-trash"></i></button>
@@ -1373,10 +1369,10 @@
     document.getElementById("totalEDPresentes").innerHTML = presentes;
     document.getElementById("totalEDAusentes").innerHTML = ausentes;
     
-    // Eventos
+    // Eventos (COM BOTÃO EDITAR e DATA CORRETA)
     const eventosHtml = dados.eventos.map(e => `
       <div class="list-item">
-        <div><strong>${e.titulo}</strong><br><small>📅 ${new Date(e.data).toLocaleDateString('pt-BR')} | ⏰ ${e.hora || "—"}</small></div>
+        <div><strong>${e.titulo}</strong><br><small>📅 ${formatarDataBr(e.data)} | ⏰ ${e.hora || "—"}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('evento', ${e.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerEvento(${e.id})"><i class="fas fa-trash"></i></button>
@@ -1385,7 +1381,7 @@
     `).join("");
     document.getElementById("listaEventos").innerHTML = eventosHtml || "<div style='text-align:center;padding:1rem;'>Nenhum evento</div>";
     
-    // ATUALIZA ANIVERSARIANTES (LÍDERES + MEMBROS)
+    // Atualiza aniversariantes separados
     atualizarAniversariantes();
   }
 
@@ -1394,7 +1390,7 @@
     const term = e.target.value.toLowerCase();
     const html = dados.membros.filter(m => m.nome.toLowerCase().includes(term)).map(m => `
       <div class="list-item">
-        <div><strong>${m.nome}</strong><br><small>📅 Nasc: ${m.nascimento ? new Date(m.nascimento).toLocaleDateString('pt-BR') : "—"}</small></div>
+        <div><strong>${m.nome}</strong><br><small>📅 Nasc: ${formatarDataBr(m.nascimento)}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('membro', ${m.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerMembro(${m.id})"><i class="fas fa-trash"></i></button>
@@ -1422,7 +1418,7 @@
     const term = e.target.value.toLowerCase();
     const html = dados.dizimos.filter(d => d.nome.toLowerCase().includes(term)).map(d => `
       <div class="list-item">
-        <div><strong>${d.nome}</strong><br><small>📅 ${new Date(d.data).toLocaleDateString('pt-BR')} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
+        <div><strong>${d.nome}</strong><br><small>📅 ${formatarDataBr(d.data)} | 💰 R$ ${d.valor.toFixed(2)}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('dizimo', ${d.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerDizimo(${d.id})"><i class="fas fa-trash"></i></button>
@@ -1438,7 +1434,7 @@
     const term = e.target.value.toLowerCase();
     const html = dados.ofertas.filter(o => o.nome.toLowerCase().includes(term)).map(o => `
       <div class="list-item">
-        <div><strong>${o.nome}</strong><br><small>📅 ${new Date(o.data).toLocaleDateString('pt-BR')} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
+        <div><strong>${o.nome}</strong><br><small>📅 ${formatarDataBr(o.data)} | 💰 R$ ${o.valor.toFixed(2)}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('oferta', ${o.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerOferta(${o.id})"><i class="fas fa-trash"></i></button>
@@ -1454,7 +1450,7 @@
     const term = e.target.value.toLowerCase();
     const html = dados.escolaDominical.filter(ed => ed.nome.toLowerCase().includes(term)).map(ed => `
       <div class="list-item">
-        <div><strong>${ed.nome}</strong><br><small>📅 ${new Date(ed.data).toLocaleDateString('pt-BR')} | ${ed.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
+        <div><strong>${ed.nome}</strong><br><small>📅 ${formatarDataBr(ed.data)} | ${ed.presente ? "✅ Presente" : "❌ Ausente"}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('escola', ${ed.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerEscola(${ed.id})"><i class="fas fa-trash"></i></button>
@@ -1468,7 +1464,7 @@
     const term = e.target.value.toLowerCase();
     const html = dados.eventos.filter(ev => ev.titulo.toLowerCase().includes(term)).map(ev => `
       <div class="list-item">
-        <div><strong>${ev.titulo}</strong><br><small>📅 ${new Date(ev.data).toLocaleDateString('pt-BR')} | ⏰ ${ev.hora || "—"}</small></div>
+        <div><strong>${ev.titulo}</strong><br><small>📅 ${formatarDataBr(ev.data)} | ⏰ ${ev.hora || "—"}</small></div>
         <div class="list-item-actions">
           <button class="btn-small btn-edit" onclick="abrirModalEditar('evento', ${ev.id})"><i class="fas fa-edit"></i></button>
           <button class="btn-small btn-danger" onclick="removerEvento(${ev.id})"><i class="fas fa-trash"></i></button>
